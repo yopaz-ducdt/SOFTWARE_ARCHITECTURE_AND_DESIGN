@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Danh sách sách</title>
+  </head>
+  <body>
+    <h2>Danh sách sách</h2>
+
+    {% if books %}
+    <table border="1">
+      <tr>
+        <th>Tên sách</th>
+        <th>Tác giả</th>
+        <th>Giá</th>
+        <th>Tồn kho</th>
+        <th>Thao tác</th>
+      </tr>
+      {% for book in books %}
+      <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.price }} VNĐ</td>
+        <td>{{ book.stock }}</td>
+        <td>
+          <a href="/cart/add/{{ book.id }}/">Thêm vào giỏ</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p>Chưa có sách nào.</p>
+    {% endif %}
+
+    <br />
+    <a href="/cart/">Xem giỏ hàng</a>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Giỏ hàng - Clean Architecture</title>
+  </head>
+  <body>
+    <h2>Giỏ hàng của bạn (Clean Architecture)</h2>
+
+    {% if cart.items %}
+    <table border="1">
+      <tr>
+        <th>Tên sách</th>
+        <th>Số lượng</th>
+        <th>Giá</th>
+        <th>Thành tiền</th>
+      </tr>
+      {% for item in cart.items %}
+      <tr>
+        <td>{{ item.book.title }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.book.price }} VNĐ</td>
+        <td>{{ item.get_subtotal }} VNĐ</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="3"><strong>Tổng cộng:</strong></td>
+        <td><strong>{{ cart.get_total }} VNĐ</strong></td>
+      </tr>
+    </table>
+    {% else %}
+    <p>Giỏ hàng trống.</p>
+    {% endif %}
+
+    <br />
+    <a href="{% url 'book_list' %}">Tiếp tục mua sắm</a>
+  </body>
+</html>

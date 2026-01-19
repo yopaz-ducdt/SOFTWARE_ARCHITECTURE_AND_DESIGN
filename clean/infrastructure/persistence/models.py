@@ -1,0 +1,53 @@
+"""
+Django ORM Models
+These are framework-specific implementations
+"""
+
+from django.db import models
+
+class CustomerModel(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)
+    
+    class Meta:
+        db_table = 'customers'
+    
+    def __str__(self):
+        return self.name
+
+
+class BookModel(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.IntegerField()
+    
+    class Meta:
+        db_table = 'books'
+    
+    def __str__(self):
+        return self.title
+
+
+class CartModel(models.Model):
+    customer = models.ForeignKey(CustomerModel, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'carts'
+    
+    def __str__(self):
+        return f"Cart {self.id} - {self.customer.name}"
+
+
+class CartItemModel(models.Model):
+    cart = models.ForeignKey(CartModel, on_delete=models.CASCADE, related_name='items')
+    book = models.ForeignKey(BookModel, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    
+    class Meta:
+        db_table = 'cart_items'
+    
+    def __str__(self):
+        return f"{self.book.title} x {self.quantity}"
